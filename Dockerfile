@@ -1,8 +1,8 @@
 FROM ruby:2.6.5-alpine
-LABEL maintainer="saiyedfaishal@gmail.com"
+LABEL maintainer="georg@ledermann.dev"
 
 # Add basic packages
-RUN apk add --no-cache \
+RUN apk add --update --no-cache \
       postgresql-client \
       tzdata \
       file
@@ -16,9 +16,6 @@ WORKDIR /app
 # Expose Puma port
 EXPOSE 3000
 
-# This image is for production env only
-ENV RAILS_ENV production
-
 # Write GIT commit SHA and TIME to env vars
 ONBUILD ARG COMMIT_SHA
 ONBUILD ARG COMMIT_TIME
@@ -31,5 +28,5 @@ ONBUILD RUN addgroup -g 1000 -S app && \
             adduser -u 1000 -S app -G app
 
 # Copy app with gems from former build stage
-ONBUILD COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
+ONBUILD COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
 ONBUILD COPY --from=Builder --chown=app:app /app /app
