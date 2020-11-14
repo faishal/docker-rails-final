@@ -1,11 +1,15 @@
-FROM ruby:2.6.5-alpine
+FROM ruby:2.6.5-stretch
 LABEL maintainer="saiyedfaishal@gmail.com"
 
 # Add basic packages
-RUN apk add --no-cache \
-      postgresql-client \
-      tzdata \
-      file
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  libpq-dev \
+  file \
+  postgresql-client \
+  tzdata \
+  yarn
+
 
 # Configure Rails
 ENV RAILS_LOG_TO_STDOUT true
