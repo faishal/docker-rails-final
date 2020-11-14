@@ -31,8 +31,8 @@ ONBUILD ENV COMMIT_SHA ${COMMIT_SHA}
 ONBUILD ENV COMMIT_TIME ${COMMIT_TIME}
 
 # Add user
-ONBUILD RUN addgroup -g 1000 -S app && \
-            adduser -u 1000 -S app -G app
+ONBUILD RUN addgroup --gid 1000 user
+ONBUILD RUN adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
 
 # Copy app with gems from former build stage
 ONBUILD COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
