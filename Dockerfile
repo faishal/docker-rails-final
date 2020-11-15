@@ -8,6 +8,7 @@ RUN apt-get update && \
   file \
   postgresql-client \
   tzdata \
+  netcat \
   yarn
 
 
